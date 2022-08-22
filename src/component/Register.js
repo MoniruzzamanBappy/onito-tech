@@ -4,17 +4,14 @@ import { useFormik } from "formik";
 import UserList from "./UserList";
 
 const Register = () => {
-  var items = [];
-  const [users, setUsers] = useState([]);
-  const formik = useFormik({
-    initialValues: {},
-    onSubmit: (values) => {
-      setUsers(values);
-    },
-  });
-  if (users) {
-    items = [...items, users];
-  }
+    const [items, setItems] = useState([]);
+    const formik = useFormik({
+      initialValues: {},
+      onSubmit: (values) => {
+        setItems([...items, values]);
+      },
+    });
+
   return (
     <>
       <form className="mx-10 mt-5" onSubmit={formik.handleSubmit}>
@@ -284,27 +281,23 @@ const Register = () => {
 
       <hr className="mx-10 mt-5" />
 
-      {users ? (
-        <div class=" mx-10 border rounded-xl my-10 overflow-x-auto">
-          <table class="table w-full">
-            <thead>
-              <tr>
-                <th>No</th>
-                <th>Name</th>
-                <th>Age/Birth Day</th>
-                <th>Sex</th>
-              </tr>
-            </thead>
-            <tbody>
-              {items?.map((item, index) => (
-                <UserList key={index} index={index} item={item}></UserList>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      ) : (
-        ""
-      )}
+      <div class=" mx-10 border rounded-xl my-10 overflow-x-auto">
+        <table class="table w-full">
+          <thead>
+            <tr>
+              <th>No</th>
+              <th>Name</th>
+              <th>Age/Birth Day</th>
+              <th>Sex</th>
+            </tr>
+          </thead>
+          <tbody>
+            {items?.map((item, index) => (
+              <UserList key={index} index={index} item={item}></UserList>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </>
   );
 };
