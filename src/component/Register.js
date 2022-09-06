@@ -31,7 +31,7 @@ const Register = () => {
     const handleSearch = () => {
       const searchValue = document.getElementById("search").value;
       if (searchValue) {
-        const filterItem = items.filter((item) =>
+        const filterItem = perviousData.filter((item) =>
           item.name.includes(searchValue)
         );
         setItems(filterItem);
