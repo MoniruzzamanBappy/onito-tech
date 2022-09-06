@@ -1,17 +1,47 @@
 import React, { useState } from "react";
-
 import { useFormik } from "formik";
 import UserList from "./UserList";
 
 const Register = () => {
   const [items, setItems] = useState([]);
+  const [perviousData, setPerviousData] = useState([]);
+  
   const formik = useFormik({
     initialValues: {},
     onSubmit: (values) => {
       setItems([...items, values]);
+      setPerviousData([...perviousData, values]);
     },
   });
-console.log(items)
+  console.log(perviousData);
+
+  // const handleSearch = () => {
+  //   const searchValue = document.getElementById("search").value;
+  //   // console.log(searchValue);
+  //   if (searchValue) {
+  //     const filterItem = items.filter((item) =>
+  //       item.name.includes(searchValue)
+  //     );
+  //     setItems(filterItem);
+  //   } else {
+  //     setItems(previousData);
+  //   }
+  // };
+    // implement search in keyup event
+    const handleSearch = () => {
+      const searchValue = document.getElementById("search").value;
+      if (searchValue) {
+        const filterItem = items.filter((item) =>
+          item.name.includes(searchValue)
+        );
+        setItems(filterItem);
+      } 
+      if(searchValue.length === 0){
+        setItems(perviousData);
+      }
+    }
+  
+
   return (
     <>
       <form className="mx-10 mt-5" onSubmit={formik.handleSubmit}>
@@ -279,9 +309,16 @@ console.log(items)
         </button>
       </form>
 
-      <hr className="mx-10 mt-5" />
+      <hr className="mx-10 my-5" />
+      <input
+        id="search"
+        type="text"
+        className="input mx-10 input-bordered input-accent  max-w-xs"
+        onKeyUp={handleSearch}
+        placeholder="please input a name"
+      ></input>
 
-      {items.length!==0 ? (
+      {items.length !== 0 ? (
         <div class=" mx-10 border rounded-xl my-10 overflow-x-auto">
           <table class="table w-full">
             <thead>
